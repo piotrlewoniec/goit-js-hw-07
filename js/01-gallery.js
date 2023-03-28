@@ -1,23 +1,20 @@
+'use strict';
 import { galleryItems } from './gallery-items.js';
 // Change code below this line
 (() => {
   const gallery = {
     galleryArea: document.querySelector('.gallery'),
+    instanceLightbox: {},
     init: function () {
       this.galleryCreate();
-      // this.galleryArea.addEventListener('click', event => {
-      //   this.galleryClickHandler(event);
-      // });
       this.galleryArea.addEventListener(
         'click',
         function (event) {
-          console.log('calling handler...');
           this.galleryClickHandler(event);
         }.bind(this)
       );
     },
     galleryCreate() {
-      console.log('Creating gallery...');
       let galleryItem = []; //array of images with html code
       for (let i = 0; i < galleryItems.length; i++) {
         const { preview, original, description } = galleryItems[i];
@@ -31,22 +28,16 @@ import { galleryItems } from './gallery-items.js';
     galleryClickHandler: function (event) {
       event.preventDefault();
       if (event.target.nodeName !== 'IMG') {
-        return console.log('Are you fucking blind!!!');
+        return console.log('Are you blind!!!');
       }
-      console.log('gallery click handler');
-      console.log('event: ', event);
-      console.log('event.target: ', event.target);
-      console.log('event.target.nodeName: ', event.target.nodeName);
-      console.log('event.target.dataset.source: ', event.target.dataset.source);
-      console.log('event.currentTarget: ', event.currentTarget);
-      const instanceLightbox = basicLightbox
+      this.instanceLightbox = basicLightbox
         .create(`<img class="gallery__item" width="1280" src="${event.target.dataset.source}">`, {
           className: 'gallery__item',
           onShow: instanceLightbox => {
             // Close when hitting escape. copy from https://github.com/electerious/basicLightbox/issues/38
             document.onkeydown = function (evt) {
               evt = evt || window.event;
-              var isEscape = false;
+              let isEscape = false;
               if ('key' in evt) {
                 isEscape = evt.key === 'Escape' || evt.key === 'Esc';
               } else {
@@ -62,7 +53,6 @@ import { galleryItems } from './gallery-items.js';
     },
   };
   gallery.init();
-  console.log(galleryItems);
 })();
 
 // Zadanie 1 - galeria obrazów
@@ -97,3 +87,12 @@ import { galleryItems } from './gallery-items.js';
 
 // Zamknięcie z klawiatury
 // Dodaj zamknięcie okna modalnego po naciśnięciu klawiszy Escape. Zrób tak, aby nasłuchiwanie klawiatury było aktywne tylko wtedy, gdy otwarte jest okno modalne. W bibliotece basicLightbox istnieje metoda na programowe zamknięcie okna modalnego.
+
+//Backup tests
+
+// console.log('gallery click handler');
+// console.log('event: ', event);
+// console.log('event.target: ', event.target);
+// console.log('event.target.nodeName: ', event.target.nodeName);
+// console.log('event.target.dataset.source: ', event.target.dataset.source);
+// console.log('event.currentTarget: ', event.currentTarget);
